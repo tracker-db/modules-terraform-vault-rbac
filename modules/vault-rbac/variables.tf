@@ -11,8 +11,8 @@ variable "roles" {
       type    = optional(string, "ssh")
       targets = list(string)
       access  = string
-      ttl     = string
-      max_ttl = string
+      ttl     = number
+      max_ttl = number
     }))
   }))
 }
