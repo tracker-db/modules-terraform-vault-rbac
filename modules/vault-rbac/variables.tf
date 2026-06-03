@@ -20,5 +20,5 @@ variable "roles" {
 variable "ssh_mount_path" {
   description = "Vault SSH secrets engine mount path"
   type        = string
-  default     = "ssh-client-signer"
+  default     = "ssh"
 }
