@@ -115,9 +115,10 @@ resource "vault_ssh_secret_backend_role" "resources" {
   name     = "ssh-${each.key}"
   key_type = "ca"
 
-  allowed_users      = local.access_config[each.value.access].allowed_users
-  default_user       = local.access_config[each.value.access].default_user
-  allowed_extensions = local.access_config[each.value.access].allowed_extensions
+  allow_user_certificates = true
+  allowed_users           = local.access_config[each.value.access].allowed_users
+  default_user            = local.access_config[each.value.access].default_user
+  allowed_extensions      = local.access_config[each.value.access].allowed_extensions
   ttl                = each.value.ttl
   max_ttl            = each.value.max_ttl
 

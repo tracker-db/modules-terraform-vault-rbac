@@ -2,16 +2,25 @@
 
 Reusable Terraform module that converts role definitions into HashiCorp Vault SSH CA roles and policies.
 
+## Module location
+
+```
+modules/vault-rbac/   — source for all consumers
+examples/basic/       — working usage example
+```
+
 ## Usage
 
 ```hcl
 module "vault_rbac" {
-  source = "git::https://github.com/tracker-db/modules-terraform-vault-rbac.git?ref=v1.0.0"
+  source = "git::https://github.com/tracker-db/modules-terraform-vault-rbac.git//modules/vault-rbac?ref=<SHA>"
 
   roles          = local.roles
   ssh_mount_path = "ssh-client-signer"
 }
 ```
+
+Pin `ref` to a full commit SHA after each merge. Never use a branch name as `ref` in production.
 
 ## Inputs
 
@@ -27,8 +36,8 @@ roles = {
   "platform-admin" = {
     description = "Full admin access"
     grants = {
-      "utility-servers" = {
-        targets = ["vm-1.lab.internal", "vm-2.lab.internal"]
+      "bastion" = {
+        targets = ["bastion.lab.internal:22"]
         access  = "admin"   # admin = root+deploy | read = deploy only
         ttl     = "8h"
         max_ttl = "24h"
@@ -57,9 +66,9 @@ For each **role**:
 
 ## Versioning
 
-Tag releases. Consuming repos pin to tags:
+Tag releases with a semver tag. Consuming repos pin to the merge commit SHA:
 
 ```bash
-git tag v1.0.0
-git push origin v1.0.0
+git tag v2.1.0
+git push origin v2.1.0
 ```
